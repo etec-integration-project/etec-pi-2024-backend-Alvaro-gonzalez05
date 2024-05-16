@@ -1,3 +1,4 @@
+# docker file
 FROM node:18-slim
 
 WORKDIR /myapp
