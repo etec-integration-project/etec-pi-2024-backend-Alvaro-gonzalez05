@@ -6,7 +6,7 @@ Alvaro Gonzalez
 
 3- Iniciaremos los contenedores haciendo un "docker compose up --build" 
 
-4- Una vez que el docker compose diga "Ready for connection", abre tu navegador y visita: 192.168.43.110:3000 o 192.168.43.110:3000/ping 
+4- Una vez que el docker compose diga "Ready for connection", abre tu navegador y visita: localhost:3000
 
 POSIBLES ERRORES: Ingresar a MYSLQ WORKBENCH y crear la coneccion con los siguientes datos, hostname "localhost" - port "3307" - user "root" - password "123456"
 
