@@ -9,3 +9,4 @@ Alvaro Gonzalez
 4- Una vez que el docker compose diga "Ready for connection", abre tu navegador y visita: localhost:3000
 
 POSIBLES ERRORES: Ingresar a MYSLQ WORKBENCH y crear la coneccion con los siguientes datos, hostname "localhost" - port "3307" - user "root" - password "123456"
+Es posible que a la hora de hacer docker compose tire error si estas en windows REVISAR QUE LA APLICACION DE DOCKER DESKTOP.
