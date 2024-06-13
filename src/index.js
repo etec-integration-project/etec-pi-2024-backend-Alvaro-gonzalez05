@@ -45,6 +45,32 @@ const createTables = async () => {
 // Crear tablas al iniciar el servidor
 setTimeout(createTables, 200); // Esperar 20 segundos antes de intentar crear las tablas
 
+const insertUser = async (username, email, password) => {
+    try {
+        const connection = await pool.getConnection();
+
+        // Utilizar parámetros para evitar inyección SQL
+        const query = `
+            INSERT INTO usuarios (username, email, contraseña)
+            VALUES (?, ?, ?);
+        `;
+
+        // Ejecución de la consulta
+        await connection.query(query, [username, email, password]);
+
+        console.log("User inserted successfully.");
+        connection.release();
+    } catch (err) {
+        console.error("Error inserting user:", err);
+    }
+};
+
+insertUser('alvaro', 'alva@example.com', '123456');
+
+
+
+
+
 app.get("/", (req, res) => {
     res.send("Hello World");
 });
