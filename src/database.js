@@ -30,7 +30,9 @@ export const createTables = async () => {
           CREATE TABLE IF NOT EXISTS products (
               id INT AUTO_INCREMENT PRIMARY KEY,
               product VARCHAR(255) NOT NULL,
+              price VARCHAR(255) NOT NULL,
               quantity INT NOT NULL
+              
           );
       `);
 
@@ -59,5 +61,26 @@ export const insertUser = async (username, email, password) => {
       connection.release();
   } catch (err) {
       console.error("Error inserting user:", err);
+  }
+};
+
+//Funcion que borra usuarios
+export const deleteUser = async (username) => {
+  try {
+      const connection = await pool.getConnection();
+
+      // Utilizar parámetros para evitar inyección SQL
+      const query = `
+          DELETE FROM usuarios
+          WHERE username = ?;
+      `;
+
+      // Ejecución de la consulta
+      await connection.query(query, [username]);
+
+      console.log("User deleted successfully.");
+      connection.release();
+  } catch (err) {
+      console.error("Error deleting user:", err);
   }
 };
