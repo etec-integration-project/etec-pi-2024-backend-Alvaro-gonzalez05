@@ -11,7 +11,7 @@ export const pool = createPool({
   database: process.env.MYSQLDB_DATABASE,
 });
 
-pool.on("connection", () => console.log("DB Connected!"));
+pool.on('connection',()=> console.log("DB Connected..."));
 
 //Funcion para crear tablas
 export const createTables = async () => {
@@ -43,7 +43,7 @@ export const createTables = async () => {
   }
 };
 
-//Funcion para Insertar usuarios
+//Funcion para insertar usuarios
 export const insertUser = async (username, email, password) => {
   try {
       const connection = await pool.getConnection();
@@ -84,3 +84,95 @@ export const deleteUser = async (username) => {
       console.error("Error deleting user:", err);
   }
 };
+
+//Funcion update usuarios
+export const updateUser = async (userId, username, email, password) => {
+    try {
+      // Obtener una conexión del pool
+      const connection = await pool.getConnection();
+  
+      // Definir la consulta SQL con parámetros
+      const query = `
+        UPDATE usuarios
+        SET username = ?, email = ?, contraseña = ?
+        WHERE id = ?;
+      `;
+  
+      // Ejecutar la consulta con los valores proporcionados
+      await connection.query(query, [username, email, password, userId]);
+  
+      console.log("User updated successfully.");
+      
+      // Liberar la conexión
+      connection.release();
+    } catch (err) {
+      console.error("Error updating user:", err);
+    }
+  };
+
+//Funcion para agregar productos
+export const insertProduct = async (product, price,quantity ) => {
+    try {
+        const connection = await pool.getConnection();
+  
+        // Utilizar parámetros para evitar inyección SQL
+        const query = `
+            INSERT INTO products (product, price, quantity)
+            VALUES (?, ?, ?);
+        `;
+  
+        // Ejecución de la consulta
+        await connection.query(query, [product, price, quantity]);
+  
+        console.log("Product inserted successfully.");
+        connection.release();
+    } catch (err) {
+        console.error("Error inserting Product:", err);
+    }
+  };
+
+//Funcion para eliminar productos
+export const deleteProduct = async (product) => {
+    try {
+        const connection = await pool.getConnection();
+  
+        // Utilizar parámetros para evitar inyección SQL
+        const query = `
+            DELETE FROM products
+            WHERE product = ?;
+        `;
+  
+        // Ejecución de la consulta
+        await connection.query(query, [product]);
+  
+        console.log("User deleted successfully.");
+        connection.release();
+    } catch (err) {
+        console.error("Error deleting user:", err);
+    }
+  };
+
+//Funcion update productos
+export const updateProduct = async (productId, product, price, quantity) => {
+    try {
+      // Obtener una conexión del pool
+      const connection = await pool.getConnection();
+  
+      // Definir la consulta SQL con parámetros
+      const query = `
+        UPDATE products
+        SET product = ?, price = ?, quantity = ?
+        WHERE id = ?;
+      `;
+  
+      // Ejecutar la consulta con los valores proporcionados
+      await connection.query(query, [product, price, quantity, productId]);
+  
+      console.log("User updated successfully.");
+      
+      // Liberar la conexión
+      connection.release();
+    } catch (err) {
+      console.error("Error updating user:", err);
+    }
+  };
