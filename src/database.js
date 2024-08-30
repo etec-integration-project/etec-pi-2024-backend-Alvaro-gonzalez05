@@ -22,7 +22,7 @@ export const createTables = async () => {
               id INT AUTO_INCREMENT PRIMARY KEY,
               username VARCHAR(255) NOT NULL,
               email VARCHAR(255) NOT NULL,
-              contraseña VARCHAR(255) NOT NULL
+              password VARCHAR(255) NOT NULL
           );
       `);
 
@@ -50,7 +50,7 @@ export const insertUser = async (username, email, password) => {
 
       // Utilizar parámetros para evitar inyección SQL
       const query = `
-          INSERT INTO usuarios (username, email, contraseña)
+          INSERT INTO usuarios (username, email, password)
           VALUES (?, ?, ?);
       `;
 
@@ -94,7 +94,7 @@ export const updateUser = async (userId, username, email, password) => {
       // Definir la consulta SQL con parámetros
       const query = `
         UPDATE usuarios
-        SET username = ?, email = ?, contraseña = ?
+        SET username = ?, email = ?, password = ?
         WHERE id = ?;
       `;
   
