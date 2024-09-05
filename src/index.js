@@ -20,7 +20,6 @@ async function initializeDatabase() {
       // Funciones de productos
       await insertProduct("Iphone 13", 500, 4);
       await insertProduct("Iphone 14", 650, 5);
-      await deleteProduct("Iphone 13");
       await updateProduct(1, "iphone 14 pro max", 700, 2);
   
     } catch (error) {

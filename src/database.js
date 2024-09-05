@@ -29,7 +29,7 @@ export const createTables = async () => {
       await connection.query(`
           CREATE TABLE IF NOT EXISTS products (
               id INT AUTO_INCREMENT PRIMARY KEY,
-              product VARCHAR(255) NOT NULL,
+              nameProduct VARCHAR(255) NOT NULL,
               price VARCHAR(255) NOT NULL,
               quantity INT NOT NULL
               
@@ -111,18 +111,18 @@ export const updateUser = async (userId, username, email, password) => {
   };
 
 //Funcion para agregar productos
-export const insertProduct = async (product, price,quantity ) => {
+export const insertProduct = async (nameProduct, price,quantity ) => {
     try {
         const connection = await pool.getConnection();
   
         // Utilizar parámetros para evitar inyección SQL
         const query = `
-            INSERT INTO products (product, price, quantity)
+            INSERT INTO products (nameProduct, price, quantity)
             VALUES (?, ?, ?);
         `;
   
         // Ejecución de la consulta
-        await connection.query(query, [product, price, quantity]);
+        await connection.query(query, [nameProduct, price, quantity]);
   
         console.log("Product inserted successfully.");
         connection.release();
@@ -132,18 +132,18 @@ export const insertProduct = async (product, price,quantity ) => {
   };
 
 //Funcion para eliminar productos
-export const deleteProduct = async (product) => {
+export const deleteProduct = async (nameProduct) => {
     try {
         const connection = await pool.getConnection();
   
         // Utilizar parámetros para evitar inyección SQL
         const query = `
             DELETE FROM products
-            WHERE product = ?;
+            WHERE nameProduct = ?;
         `;
   
         // Ejecución de la consulta
-        await connection.query(query, [product]);
+        await connection.query(query, [nameProduct]);
   
         console.log("User deleted successfully.");
         connection.release();
@@ -153,7 +153,7 @@ export const deleteProduct = async (product) => {
   };
 
 //Funcion update productos
-export const updateProduct = async (productId, product, price, quantity) => {
+export const updateProduct = async (productId, nameProduct, price, quantity) => {
     try {
       // Obtener una conexión del pool
       const connection = await pool.getConnection();
@@ -161,12 +161,12 @@ export const updateProduct = async (productId, product, price, quantity) => {
       // Definir la consulta SQL con parámetros
       const query = `
         UPDATE products
-        SET product = ?, price = ?, quantity = ?
+        SET nameProduct = ?, price = ?, quantity = ?
         WHERE id = ?;
       `;
   
       // Ejecutar la consulta con los valores proporcionados
-      await connection.query(query, [product, price, quantity, productId]);
+      await connection.query(query, [nameProduct, price, quantity, productId]);
   
       console.log("User updated successfully.");
       
