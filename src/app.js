@@ -17,6 +17,40 @@ app.use(cors({
 // Middleware para parsear JSON
 app.use(express.json());
 
+
+
+app.post("/orders", async (req, res) => {
+  const { totalPrice, products } = req.body;
+
+  // Extraer solo los nombres de los productos usando nameProduct
+  const productNames = products.map(product => product.nameProduct);
+
+  try {
+      await pool.query(`
+          CREATE TABLE IF NOT EXISTS orders (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              total_price DECIMAL(10, 2) NOT NULL,
+              order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+              products JSON NOT NULL
+          );
+      `);
+
+      // Guardar solo los nombres de los productos
+      const result = await pool.query(
+          "INSERT INTO orders (total_price, products) VALUES (?, ?)",
+          [totalPrice, JSON.stringify(productNames)]
+      );
+
+      res.status(201).json({ message: "Order saved successfully", orderId: result.insertId });
+  } catch (error) {
+      console.error("Error saving the order:", error);
+      res.status(500).json({ error: "An error occurred while saving the order" });
+  }
+});
+
+
+
+
 // Ruta para registrar un nuevo usuario
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
@@ -80,13 +114,14 @@ app.post("/login", async (req, res) => {
 // Obtener todos los productos
 app.get("/products", async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM products");
-    res.json(rows);
+      const [rows] = await pool.query("SELECT id, nameProduct, price, img, quantity FROM products");
+      res.json(rows);
   } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Error fetching products" });
+      console.error("Error fetching products:", error);
+      res.status(500).json({ error: "Error fetching products" });
   }
 });
+
 
 
 
