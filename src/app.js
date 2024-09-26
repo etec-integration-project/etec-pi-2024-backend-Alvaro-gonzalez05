@@ -3,6 +3,8 @@ import { pool } from "./database.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cors from "cors"; // Importa el paquete cors
+const secretKey = 'clave_secreta_jwt'; // Define tu clave secreta aquí o en un archivo de configuración
+
 
 const app = express();
 
@@ -72,7 +74,12 @@ app.post("/register", async (req, res) => {
       `INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`,
       [username, email, hashedPassword]
     );
-    res.status(201).json({ message: "Usuario registrado con éxito" });
+
+    // Generar token JWT
+    const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+
+    // Enviar el token en la respuesta junto con el mensaje de éxito
+    res.status(201).json({ message: "Usuario registrado con éxito", token: token });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ message: "Internal server error" });
