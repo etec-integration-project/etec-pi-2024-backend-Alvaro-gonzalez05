@@ -13,6 +13,28 @@ export const pool = createPool({
 
 pool.on('connection',()=> console.log("DB Connected..."));
 
+
+
+//Funcion que crea la base de datos
+export const createDatabases = async () => {
+  try {
+      const connection = await pool.getConnection();
+      await connection.query(`
+          DROP DATABASE IF EXISTS ecommerce;
+          CREATE DATABASE ecommerce;
+          USE ecommerce;
+      `);
+
+      
+
+      console.log("Databases created successfully.");
+      connection.release();
+  } catch (err) {
+      console.error("Error creating Databases:", err);
+  }
+};
+
+
 //Funcion para crear tablas
 export const createTables = async () => {
   try {
