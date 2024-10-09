@@ -1,4 +1,0 @@
-CREATE DATABASE IF NOT EXISTS ecommerce;
-CREATE USER 'alva'@'%' IDENTIFIED BY 'soyyo';
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON ecommerce.* TO 'alva'@'%';
