@@ -9,6 +9,8 @@ export const pool = createPool({
   user: process.env.MYSQLDB_USER,
   password: process.env.MYSQLDB_PASSWORD,
   database: process.env.MYSQLDB_DATABASE,
+  multipleStatements: true
+
 });
 
 pool.on('connection',()=> console.log("DB Connected..."));
