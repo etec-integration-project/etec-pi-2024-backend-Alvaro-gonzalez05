@@ -36,7 +36,7 @@ export const createTables = async () => {
         );
     `);
     await connection.query(`
-      INSERT INTO products (img, nameProduct, price, quantity) VALUES
+      INSERT IGNORE INTO products (img, nameProduct, price, quantity) VALUES
       ('https://www.nespresso.com/coffee-blog/sites/default/files/2024-06/WW_IG-FB_VL_BaristaCreations_BlackIced_BlackCurrant_2019-2029.jpg', 'Lively Citrus Splash ', 3.00,1),
       ('https://www.nespresso.com/coffee-blog/sites/default/files/2024-04/240325-Nespresso-cadiz-receta05-GISJ0591-Mejorado-NR.jpg', 'Café Moca con Crema', 3.50, 1),
       ('https://www.nespresso.com/coffee-blog/sites/default/files/2024-06/WW_IG-FB_VL_BaristaCreations_IcedLatte_SaltedCaramel_2019-2029.jpg', 'Ice Caramel Latte', 4.00, 1),
@@ -72,7 +72,7 @@ export const insertUser = async (username, email, password) => {
 
       // Utilizar parámetros para evitar inyección SQL
       const query = `
-          INSERT INTO usuarios (username, email, password)
+          INSERT IGNORE INTO usuarios (username, email, password)
           VALUES (?, ?, ?);
       `;
 
