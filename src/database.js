@@ -25,6 +25,12 @@ export const createDatabases = async () => {
           DROP DATABASE IF EXISTS ecommerce;
           CREATE DATABASE ecommerce;
           USE ecommerce;
+          CREATE USER 'alva'@'%' IDENTIFIED BY 'soyyo';
+          GRANT ALL PRIVILEGES ON ecommerce.* TO 'alva'@'%';
+          FLUSH PRIVILEGES;
+
+
+
       `);
 
       
